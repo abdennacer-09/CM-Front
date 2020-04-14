@@ -1,0 +1,91 @@
+
+/* Start table patient */
+
+.page .main-patient h1{
+    padding-bottom: 20px;
+}
+
+.main-patient .fa-table{
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+.page .main-patient 
+.card .card-title{
+    background-color: #EEE;
+    padding: 10px;
+}
+
+.page .main-patient 
+.card .serch-pat{
+    float: right;
+    width: 150px;
+}
+
+.page .main-patient 
+.card .card-title .card-tools{
+    float: right;
+}
+
+.card-title span{
+    top: -15px;
+}
+
+.page .main-patient .divSearch{
+    margin-bottom: 10px;
+}
+
+.page .main-patient 
+.pat .main-table{
+    background-color: #ffffff;
+    -webkit-box-shadow: 0 3px 10px #CCC;
+    -moz-box-shadow: 0 3px 10px #CCC;
+    box-shadow: 0 3px 10px #CCC;
+}
+
+.page .main-patient 
+.pat .main-table td{
+    vertical-align: middle !important;
+}
+
+
+
+.page .main-patient 
+.pat .main-table .fa-edit{
+    color: #2ecc71;
+}
+
+.page .main-patient 
+.pat .main-table .fa-trash-alt{
+    color: #eb2f06;
+}
+
+
+
+/* End table patient */
+
+/*start ajouter pation */
+
+.page .main-patient 
+.modal-body .sx .custom-radio{
+    margin-left: 15px;
+    margin-top: 7px;
+}
+
+.page .main-patient 
+.modal-body .mt .custom-radio{
+    margin-left: 15px;
+    margin-top: 7px;
+}
+
+/*.page .main-patient .modal .modal-content{
+    min-width: 600px;
+}
+
+.modal-dialog{
+    /*padding-right: 600px*/
+
+/*min-width: 600px;
+    text-align: center;*/
+
+/* End ajouter patient */

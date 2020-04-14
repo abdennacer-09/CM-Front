@@ -1,0 +1,425 @@
+.page .consPrs .titleCons{
+    background-color: #0984e3;
+    color: #FFF;
+    padding: 10px;
+    margin-top: 15px;
+    border-radius: 10px;
+}
+
+.page .consPrs .titleCons span{
+    display: inline-block;
+}
+
+.page .consPrs .cardtitleCons{
+    background-color: #EEE;
+    padding: 10px;
+    margin-bottom: 0;
+}
+
+.page .consPrs .card-body{
+    padding: 5px;
+}
+
+.page .consPrs .card-body .btn{
+    margin-right: 5px;
+}
+
+.page .consPrs 
+.card-body .progressbar li{
+    list-style-type: none;
+    float: left;
+    width: 25%;
+    position: relative;
+}
+
+.card-body .progressbar li:before{
+    content: '';
+    width: 15px;
+    height: 15px;
+    border: 1px solid rgb(2, 2, 2);
+    display: block;
+    margin-left: 25px;
+    margin-bottom: 10px;
+    border-radius: 50%;
+    background-color: #b2bec3;
+    border-color: #b2bec3;
+}
+
+.card-body .progressbar li:after{
+    content: '';
+    position: absolute;
+    width: 90%;
+    height: 1px;
+    background-color: rgb(3, 3, 3);
+    top: 8px;
+    left: 40px;
+    right: 0;
+}
+
+.card-body .progressbar li:last-child:after{
+    content: none;
+}
+
+.card-body .progressbar li.active::before{
+    background-color: #55efc4;
+}
+
+.page .consPrs  
+.card-body .procedeur{
+    margin-top: 10px;
+    border: 1px solid #eeeeee;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.page .consPrs  
+.card-body .procedeur button{
+    margin-right: 10px;
+}
+
+#firstLib{
+    margin-right: 115px;
+}
+
+.page .consPrs  
+.card-body .information{
+    padding-top: 15px;
+    padding-bottom: 15px;
+    height: 400px;
+
+}
+
+.page .consPrs  
+.card-body .information .card-body{
+    height: 100%;
+    display: flex;
+}
+
+.page .consPrs  
+.card-body .information h2{
+    padding-top: 30px;
+}
+
+.page .consPrs  
+.card-body .information label{
+    margin-right: 100px;
+}
+
+.page .consPrs   
+.card-body .information .ConsulterPrs{
+    display: inline-block;
+    max-width: 25%;;
+}
+
+.page .consPrs   
+.card-body .information .divDate{
+    margin-top: 30px;
+}
+
+.page .consPrs   
+.card-body .information .divDate .form-control{
+    width: 89%;
+}
+
+/*******  *******/
+
+.page .information .autocomplete{
+    width: 70%;
+    position: relative;
+    margin-bottom: 10px;
+    display: flex;
+}
+
+.page .information .autocomplete 
+.input{
+    height: 40px;
+    border-radius: 3px;
+    border: 2px solid lightgray;
+    box-shadow: 0 0 10px #eceaea;
+    font-size: 25px;
+    padding-left: 10px;
+    padding-top: 10px;
+    cursor: text;
+    line-height: 1;
+    width: 100%;
+}
+
+.page .information .popover{
+    min-height: 40px;
+    border: 2px solid lightgray;
+    position: absolute;
+    top: 46px;
+    left: 0;
+    right: 0;
+    background: #fff;
+    border-radius: 3px;
+    width: 100%;
+    margin-left: 25px;
+}
+
+.page .information .popover input{
+    width: 95%;
+    margin-top: 5px;
+    height: 40px;
+    font-size: 16px;
+    border-radius: 3px;
+    border: 1px solid lightgray;
+    padding-left: 8px;
+    margin-left: 5px;
+}
+
+.page .information .options{
+    max-height: 150px;
+    overflow-y: scroll;
+    margin-top: 5px;
+}
+
+.page .information .options ul{
+    list-style-type: none;
+    text-align: left;
+    padding-left: 0;
+}
+
+.page .information .options ul li{
+    border-bottom: 1px solid lightgray;
+    padding: 10px;
+    cursor: pointer;
+    background: #f1f1f1;
+}
+
+.page .information  
+.options ul li.selected{
+    background: #58bd4c;
+    color: #fff;
+    font-weight: 600;
+}
+
+/*******  *******/
+
+.page .consPrs   
+.card-body .entrerCons {
+    color: #fff;
+    background-color: #b2bec3;
+    border-color: #b2bec3;
+}
+
+.page .consPrs   
+.card-body .enrg {
+    color: #fff;
+    background-color: #6c5ce7;
+    border-color: #74b9ff;
+}
+
+.page .consPrs   
+.card-body .imprOrd , .imprRec , .imprCert  {
+    color: #fff;
+    background-color: #2d3436;
+    border-color: #2d3436;
+}
+
+.page .consPrs   
+.card-body .imprOrd , .imprRec:hover , .imprCert:hover{
+    color: #fff;
+    text-decoration: none;
+}
+
+.page .consPrs    
+.card-body .nav-link{
+    cursor: pointer;
+}
+
+.page .consPrs    
+.card-body .enregistrementAntec .col-md-6{
+    min-height: 200px;
+}
+
+.page .consPrs    
+.card-body .enregistrementAntec .card-title{
+    background-color: #EEE;
+    padding: 5px;
+    margin-bottom: 0;
+}
+
+.page .consPrs    
+.card-body .enregistrementAntec .card-body{
+    padding: 5px;
+}
+
+.page .consPrs    
+.card-body .mt-2{
+    margin-top: 20px !important;
+}
+
+.page .consPrs    
+.card-body form{
+    margin: 10px auto 10px;
+    overflow: hidden;
+    padding-left: 10px;
+}
+
+.page .consPrs    
+.card-body form .divInput{
+    margin-right: 5px;
+    width: 40%;
+}
+
+.page .consPrs    
+.card-body form .divInput:first-child{
+    margin-left: 5px;
+}
+
+.page .consPrs    
+.card-body form .addTas{
+    width: 13%;
+    text-align: center;
+}
+
+.page .consPrs    
+.card-body .main-table{
+    background-color: #ffffff;
+    -webkit-box-shadow: 0 3px 10px #CCC;
+    -moz-box-shadow: 0 3px 10px #CCC;
+    box-shadow: 0 3px 10px #CCC;
+}
+
+.page .consPrs    
+.card-body .main-table td{
+    vertical-align: middle !important;
+}
+
+.page .consPrs    
+.card-body .main-table .fa-edit{
+    color: #2ecc71;
+}
+
+.page .consPrs    
+.card-body .main-table .fa-trash-alt{
+    color: #eb2f06;
+}
+
+.page .consPrs    
+.card-body .enregistrementInterog .col-md-6{
+    min-height: 200px;
+}
+
+.page .consPrs    
+.card-body .enregistrementInterog .card-title{
+    background-color: #EEE;
+    padding: 5px;
+    margin-bottom: 0;
+}
+
+.page .consPrs    
+.card-body .enregistrementInterog .card-body{
+    padding: 5px;
+}
+
+/* enregistrementExamen */
+
+.page .consPrs    
+.card-body .enregistrementExamen .col-md-6{
+    min-height: 200px;
+}
+
+.page .consPrs    
+.card-body .enregistrementExamen .card-title{
+    background-color: #EEE;
+    padding: 5px;
+    margin-bottom: 0;
+}
+
+.page .consPrs    
+.card-body .enregistrementExamen .card-body{
+    padding: 5px;
+}
+
+/*  enregistrementBilan */
+
+.page .consPrs    
+.card-body .enregistrementBilan .col-md-6{
+    min-height: 200px;
+}
+
+.page .consPrs    
+.card-body .enregistrementBilan .card-title{
+    background-color: #EEE;
+    padding: 5px;
+    margin-bottom: 0;
+}
+
+.page .consPrs    
+.card-body .enregistrementBilan .card-body{
+    padding: 5px;
+}
+
+.main-ord .fa-table{
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+.page .main-ord 
+.card .card-title{
+    background-color: #EEE;
+    padding: 10px;
+}
+
+.page .main-ord 
+.card .card-title .card-tools{
+    float: right;
+}
+
+.page .globalConsultation 
+.modal-body .sx .custom-radio{
+    margin-left: 15px;
+    margin-top: 7px;
+}
+
+.page .globalConsultation
+.modal-body .mt .custom-radio{
+    margin-left: 15px;
+    margin-top: 7px;
+}
+
+.page .enregistrementCertifMedc form{
+    margin-left: 20px;
+    width: 100%;
+}
+
+.page .enregistrementCertifMedc form .form-group{
+    width: 50%;
+    margin-left: 20px;
+}
+
+
+
+
+/*.page .fields{
+    width: 100%;
+    height: 55px;
+    display: flex;
+    margin-top: 20px;
+}
+
+.page .fields > div{
+    width: 16.66%;
+    height: 100%;
+    text-align: center;
+    font-size: 20px;
+    line-height: 50px;
+    cursor: pointer;
+    background-color: transparent;
+}
+
+.page .fields .cnsl > div:nth-child(1),
+.page .fields > div:nth-child(2){
+    background: rgb(206, 204, 204);
+    transition: all .3s ease-in-out;
+}
+
+.page .fields .cnsl > div:nth-child(2){
+    background: transparent !important;
+    transition: all .3s ease-in-out;
+}*/
+
+
+

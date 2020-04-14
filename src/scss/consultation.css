@@ -1,0 +1,58 @@
+/* Start table Consultation */
+
+.page .main-cons h1{
+    padding-bottom: 20px;
+}
+
+.main-cons .fa-table{
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+.page .main-cons 
+.card .card-title{
+    background-color: #EEE;
+    padding: 10px;
+}
+
+.page .main-cons 
+.card .serch-pat{
+    float: right;
+    width: 150px;
+}
+
+.page .main-cons 
+.card .card-title .card-tools{
+    float: right;
+}
+
+.card-title span{
+    top: -15px;
+}
+
+.page .main-cons 
+.cons .main-table{
+    background-color: #ffffff;
+    -webkit-box-shadow: 0 3px 10px #CCC;
+    -moz-box-shadow: 0 3px 10px #CCC;
+    box-shadow: 0 3px 10px #CCC;
+}
+
+.page .main-cons 
+.cons .main-table td{
+    vertical-align: middle !important;
+}
+
+.page .main-cons 
+.cons .main-table .fa-edit{
+    color: #2ecc71;
+}
+
+.page .main-cons 
+.cons .main-table .fa-trash-alt{
+    color: #eb2f06;
+}
+
+
+
+/* End table Consultation */
