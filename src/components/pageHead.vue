@@ -6,6 +6,10 @@
 </template>
 
 <script>
+
+////var url ='backend.storeino.info'
+var url ='localhost:5000'
+
 export default {
     name: 'pageHead',
     data:function(){

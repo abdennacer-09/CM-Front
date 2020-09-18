@@ -78,6 +78,121 @@
     margin-top: 7px;
 }
 
+.projects h1{
+    text-align: center;
+    font-size: 50px;
+}
+
+.main-patient .titleListPatient{
+    background-color: #0984e3;
+    color: #FFF;
+    padding: 10px;
+    margin-top: 15px;
+    border-radius: 10px;
+}
+
+.page .main-patient .titleListPatient span{
+    display: inline-block;
+}
+
+.page .main-patient .modal-dialog{
+    max-width: 1000px;
+    margin: 1.75rem auto;
+} 
+
+.page .main-patient .mtField{
+    margin-bottom: 15px;
+}
+
+.page .main-patient .mtField 
+.nav-tabs .nav-item:hover{
+    cursor: pointer;
+}
+
+.page .main-patient    
+.modal .antec .col-md-6{
+    min-height: 200px;
+}
+
+.page .main-patient    
+.modal .antec .card-title{
+    background-color: #EEE;
+    padding: 5px;
+    margin-bottom: 0;
+}
+
+.page .main-patient    
+.modal .antec .card-body{
+    padding: 5px;
+}
+
+.page .main-patient    
+.modal .antec .card-body form{
+    margin: 10px auto 10px;
+    overflow: hidden;
+    padding-left: 10px;
+}
+
+.page .main-patient    
+.modal .antec .card-body form .divInput{
+    margin-right: 5px;
+    width: 40%;
+}
+
+.page .main-patient    
+.modal .antec .card-body form .divInput:first-child{
+    margin-left: 5px;
+}
+
+.page .main-patient    
+.modal .antec .card-body form .addTas{
+    width: 13%;
+    text-align: center;
+}
+
+.page .main-patient    
+.modal .main-table{
+    background-color: #ffffff;
+    -webkit-box-shadow: 0 3px 10px #CCC;
+    -moz-box-shadow: 0 3px 10px #CCC;
+    box-shadow: 0 3px 10px #CCC;
+}
+
+.page .main-patient    
+.modal .main-table td{
+    vertical-align: middle !important;
+}
+
+.page .main-patient    
+.modal .main-table .fa-edit{
+    color: #2ecc71;
+}
+
+.page .main-patient    
+.modal .main-table .fa-trash-alt{
+    color: #eb2f06;
+}
+
+.page .main-patient .modal .antec form .divInputsMdc{
+    width: 80%;
+    padding-left: 10px;
+}
+
+.page .main-patient .modal .antec form .divInputsMdc .divEntr{
+    width: 75%;
+}
+
+
+.page .main-patient .modal .divInputsMdc input{
+    margin-bottom: 10px;
+}
+
+#lastPatientTable{
+    display: none;
+}
+
+
+
 /*.page .main-patient .modal .modal-content{
     min-width: 600px;
 }

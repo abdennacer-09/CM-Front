@@ -1,6 +1,10 @@
 <template>
     <div class="container">
-        <h1>Dashboard</h1>
+        <div class="inline">
+            <h1>Tableau de bord</h1>
+            <span class="today">La date d'aujourd'hui :  {{dateNow | myDate}}</span>
+        </div>
+        
         <div class=" acc text-center">
             
             <div class="row">
@@ -50,7 +54,9 @@
                             <i class="fab fa-algolia fa-lg"></i> Les Rendez-vous d'aujourd'hui
                         </div>
                         <div class="card-body">
-                            Test
+                            <ul class="list-unstyled latest-rdvs">
+                                <!--<li v-bind:key="rdv._id" v-for="rdv in rdvs" >{{rdv.patient.nom }} {{rdv.date  | myDateTime}} <span class="fas fa-edit float-right"></span></li>-->
+                            </ul>
                         </div>
                     </div>
                 </div>
@@ -60,7 +66,9 @@
                             <i class="fab fa-algolia fa-lg"></i> Les Consultaions et les controle d'aujourd'hui
                         </div>
                         <div class="card-body">
-                            Test
+                            <ul class="list-unstyled latest-rdvs">
+                                <!--<li v-bind:key="cons._id" v-for="cons in consultations" >{{cons.patient.nom }} {{cons.date | myDate}} <span class="fas fa-edit float-right"></span></li>-->
+                            </ul>
                         </div>
                     </div>
                 </div>
@@ -72,6 +80,11 @@
 </template>
 
 <script>
+
+//var url ='backend.storeino.info'
+var url ='localhost:5000'
+//var ide ='5e9776cfccc2da282c7dd346'
+
 import axios from 'axios';
 
 export default {
@@ -83,6 +96,9 @@ export default {
             countConsult:0,
             countCertMdc : 0,
             countOrdns: 0,
+            rdvs:[],
+            consultations:[],
+            dateNow : new Date(),//.toJSON().slice(0,10).replace(/-/g,'/'),
         }
     },
     created(){
@@ -91,41 +107,102 @@ export default {
         this.getCountConsutations();
         this.getCountCertificatMedical();
         this.getCountOrdonnance();
+        this.getNowRendezVous();
+        this.getNowConsultations();
         //this.countPatient();
         //setInterval( () => this.getPatients(), 2000);
     },
     methods:{
         getPatients(){
-                axios.get('http://localhost:5000/patients/5e7ea5dc77d5da3de8d5a9f5')
+                axios.get('http://'+url+'/patients')
                 .then(res => this.patients = res.data)
                 .catch(err => console.log(err));
         },
         getCountPatients(){
-                axios.get('http://localhost:5000/patients/countPat/5e7ea5dc77d5da3de8d5a9f5')
+                axios.get('http://'+url+'/patients/countPat')
                 .then(res => this.countPat = res.data)
                 .catch(err => console.log(err));
         },
         getCountConsutations(){
-            axios.get('http://localhost:5000/consultations/countCons')
+            axios.get('http://'+url+'/consultations/countCons')
                 .then(res => this.countConsult = res.data)
                 .catch(err => console.log(err));
         },
         getCountCertificatMedical(){
-            axios.get('http://localhost:5000/certificatsMedicaux/countCertMdc')
+            axios.get('http://'+url+'/certificatsMedicaux/countCertMdc')
                 .then(res => this.countCertMdc = res.data)
                 .catch(err => console.log(err));
         },
         getCountOrdonnance(){
-            axios.get('http://localhost:5000/ordonnances/countOrdns')
+            axios.get('http://'+url+'/ordonnances/countOrdns')
                 .then(res => this.countOrdns = res.data)
                 .catch(err => console.log(err));
         },
+        getNowRendezVous(){
+            axios.get('http://'+url+'/rdvs/rdvAujourdui')
+                .then(res => this.rdvs = res.data)
+                .catch(err => console.log(err));
+                //console.log(this.dateNow);
+        },
+        getNowConsultations(){
+            axios.get('http://'+url+'/consultations/consAjourdui')
+                .then(res => this.consultations = res.data)
+                .catch(err => console.log(err));
+                
+        },
+    },
+    computed: {
+        
+        filteredRdvs: function(){
+            //var moment = require('moment');
+
+            var theDate = new Date();
+            return this.rdvs.filter((rdv) => {
+
+                    
+                    return rdv.date.getDate == theDate.getDate() &&  rdv.date.getMonth() == theDate.getMonth() && 
+                        
+                        rdv.date.getFullYear() == theDate.getFullYear()                
+            });
+        }      
+        
     }
+    
 }
 </script>
 
 <style>
 /* Start Accueil Page */
+
+    .page .inline{
+        display: flex;
+    }
+
+    .page .today{
+        position: absolute;
+        top : 90px;
+        right: 20px;
+        font-weight: bold;
+    }
+
+    .page .latest .latest-rdvs{
+        margin-bottom: 0;
+    }
+
+    .page .latest .latest-rdvs li{
+        padding:  5px 0;
+        overflow: hidden;
+    }
+
+    .page .latest .latest-rdvs li:nth-child(odd){
+        background-color: #EEE;
+    }
+
+    .page .latest .latest-rdvs li .fa-edit{
+        color: #2ecc71;
+        cursor: pointer;
+    }
+
     .page .acc{
         padding-top: 15px;
     }

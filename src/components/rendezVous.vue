@@ -12,7 +12,10 @@
                         <button class="btn btn-primary" @click="btnAjouterRendezVous" data-toggle="modal" data-target="#addNew"><i class="fas fa-plus"></i>  Ajouter Rendez-vous</button>
                     </div>
                 </div>
-                <div class="card-body">
+                <div class="card-body row">
+                    <div class="divSearch col-md-12">
+                        <input v-model="search" class="form-control" type="text" placeholder="Search" aria-label="Search">
+                    </div>
                     <div class="table-responsive">
                         <table class="main-table text-center table table-bordered">
                             <tr>
@@ -20,8 +23,8 @@
                                 <th>Date</th>
                                 <th>Control</th>
                             </tr>
-                            <tr v-bind:key="event._id" v-for="event in events">
-                                <td >{{event.patient.nom }} {{ event.patient.prenom }}</td>
+                            <tr v-bind:key="event._id" v-for="event in filteredRendezVous">
+                                <td >{{event.patient.nom }}</td>
                                 <td>{{event.date  | myDateTime}}</td>
                                 <td>
                                     <a href="#" data-toggle="modal" data-target="#addNew" @click="editRendezVous(event)"><i class="fas fa-edit"></i></a>
@@ -32,6 +35,31 @@
                             </tr>
                             
                         </table>
+                    </div>
+                    <div class="btn-group col-md-2 offset-md-5 paginate">
+                        <button 
+                            v-if="page != 1"
+                            type="button" 
+                            @click="page--"
+                            class="btn btn-sm btn-outline-secondary"> 
+                                Précédent
+                        </button>
+                        <button 
+                            type="button"
+                            v-for="pageNumber in pages.slice(page-1, page+6)"
+                            :key="pageNumber"
+                            @click="page = pageNumber"
+                            class="btn btn-sm btn-outline-secondary">
+                                {{pageNumber}}
+                        </button>
+
+                        <button
+                            v-if="page < pages.length"
+                            type="button" 
+                            @click="page++"
+                            class="btn btn-sm btn-outline-secondary">
+                                Suivant
+                        </button>
                     </div>
                     <Fullcalendar 
                         locale="fr"
@@ -72,10 +100,7 @@
                     </div>
 
                 </div>
-
-
-
-
+                
                 <div v-else class="modal-content">
                     <div class="modal-header">
                         <h5 v-if="myRendezVous" class="modal-title" id="addNewLabel">Modifier le rendez-vous</h5>
@@ -86,7 +111,7 @@
                     </div>
                     <div class="modal-body">
                         <form method="post">
-                            <div class="form-group row">
+                            <div v-if="myRendezVous == null" class="form-group row">
                                 <label for="patient" class="col-sm-2 col-form-label">Patient:</label>
                                 <div class="col-sm-10">
                                     <div class="autocomplete">
@@ -115,6 +140,15 @@
                                 </div>
                             </div>
 
+                            <div v-if="myRendezVous" class="form-group row">
+                                <div class="col-sm-3">
+                                    Nom : 
+                                </div>
+                                <div class="col-sm-9" style="font-weight: bold;">
+                                    {{this.patient}}
+                                </div>
+                            </div>
+
                             <div class="form-group row">
                                 <label for="dateTime" class="col-sm-2 col-form-label">Date :</label>
                                 <div class="col-sm-10 rdvDate">
@@ -133,7 +167,7 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger" data-dismiss="modal">Annuler</button>
                         <input v-if="myRendezVous" type="submit" @click.prevent="updateRendezVous()" class="btn btn-success" value="Modifier">
-                        <input v-else  type="submit" @click.prevent="addnewEvent" class="btn btn-success" value="Enregistrer">
+                        <input v-else type="submit" @click.prevent="addnewEvent" class="btn btn-success" value="Enregistrer">
                     </div>
                 </div>
             </div>
@@ -163,8 +197,12 @@ import { Datetime } from 'vue-datetime';
 
 import axios from 'axios';
 import $ from 'jquery';
+import { mapActions, mapGetters } from 'vuex'
 //import {mapGetters} from 'vuex';
-
+//var url ='localhost:5000'
+var url ='backend.storeino.info'
+//var ide ='5e9776cfccc2da282c7dd346'
+//var idL = '5e7ea5dc77d5da3de8d5a9f5'
 export default {
     name: 'rendezVous',
     data:() =>({
@@ -192,11 +230,16 @@ export default {
         nom:'',
         _id:'',
         myCons : false,
-        myRendezVous: null
+        myRendezVous: null,
+        search:'',
+        page:1,
+        perPage:5,
+        pages:[]
     }),
     created(){
         this.getEvents();
         this.getPatients();
+        this.getProfile();
         //this.ChosePatients();
     },
     components:{
@@ -204,31 +247,14 @@ export default {
         //DatePicker
         Datetime
     },
-    computed:{
-        matches(){
-                console.log(this.query);
-            if(this.query == ''){
-                return [];
-            }
-            return this.patients.filter((patient) => patient.nom.toLowerCase().includes(this.query.toLowerCase()))
-        },
-    },
 
     methods:{
         btnAjouterRendezVous(){
             this.myCons = false;
             this.myRendezVous = null;
             this.date = ''; 
+            this.patient = '';
             document.getElementById('inputPatint').textContent = '';
-            /*var typeInter = setInterval( () => {
-                    var CaractersLength = "HH",
-                    i= 0;
-                    this.getPatients();
-                    i = i + 1;
-                    if(i > CaractersLength.length - 1){
-                        clearInterval(typeInter);
-                    }
-                } , 400);*/
         },
         toggleVisible(){
             var idPat = document.getElementById('idPatient').textContent;
@@ -286,27 +312,38 @@ export default {
             
         },
         getEvents(){
-            axios.get('http://localhost:5000/rdvs')
+            axios.get('http://'+url+'/rdvs/')
                 .then( res => this.events = res.data)
                 .catch(err => console.log(err)); 
         },
         addnewEvent(){
             var idPat = document.getElementById('idPatient').textContent;
             console.log(idPat);
+
+            this.$Progress.start();
             
             let newEvents = {
                 date: this.date,
                 patient: idPat
-            }
+            };
             if(this.date !== '' && document.getElementById('inputPatint').textContent !== '' ){
-                axios.post('http://localhost:5000/rdvs/5e7ea5dc77d5da3de8d5a9f5/addRdv', newEvents)
+                axios.post('http://'+url+'/rdvs/'+this.user._id+'/addRdv', newEvents)
                 .then(res => {
                     this.events = [res.data, ...this.events];
+                    this.getEvents();
+                    this.getPatients();
+                    this.date = ''; 
+                    document.getElementById('inputPatint').textContent = '';
+                    $('#addNew').modal('hide');
+                    this.$swal({title:'Ajouter' , text:'le rendez vous ajouter avec Succès', icon:'success', buttons: true}).then((willRef) => {
+                        if(willRef){
+                            window.location = '/rendezVous'
+                        }
+                        
+                    });
                 });
-                this.date = ''; 
-                document.getElementById('inputPatint').textContent = '';
-                $('#addNew').modal('hide');
-                var CaractersLength = "HH",
+                
+                /*var CaractersLength = "HH",
                 i= 0;
                 var typeInter = setInterval( () => {
                     this.getEvents();
@@ -314,12 +351,12 @@ export default {
                     if(i > CaractersLength.length - 1){
                         clearInterval(typeInter);
                     }
-                } , 400);
+                } , 400);*/
             }
-
+                this.$Progress.finish();
         },
         getPatients(){
-                axios.get('http://localhost:5000/patients/5e7ea5dc77d5da3de8d5a9f5')
+                axios.get('http://'+url+'/patients/')
                 .then(res => this.patients = res.data)
                 .catch(err => console.log(err));
         },
@@ -328,7 +365,7 @@ export default {
         },
         deleteRendevous(_id){
             if(confirm('êtes-vous sûr de supprimer cet élément ?')){
-                axios.delete(`http://localhost:5000/rdvs/5e7ea5dc77d5da3de8d5a9f5/deleteRdv/${_id}`)
+                axios.delete(`http://`+url+`/rdvs/deleteRdv/${_id}`)
                 .then( () =>{
                     this.events = this.events.filter(event => event._id !== _id);
                 })
@@ -338,6 +375,7 @@ export default {
             this.myCons = false;
             this.myRendezVous = event;
             this.date = event.date;
+            this.patient = event.patient.nom;
             //document.getElementById('patientId').innerHTML = event.patient;
         },
         updateRendezVous(){
@@ -348,7 +386,7 @@ export default {
             var CaractersLength = "HH",
                 i= 0;
                 if(this.date !== ''){
-                    axios.put('http://localhost:5000/rdvs/5e7ea5dc77d5da3de8d5a9f5/updateRdv/'+Rdv._id, Rdv)
+                    axios.put('http://'+url+'/rdvs/updateRdv/'+Rdv._id, Rdv)
                     .then(res => {
                         this.events = this.events.map(r => {
                             if(res.data._id === r._id){
@@ -359,7 +397,7 @@ export default {
                         
                     });
                 }
-
+                this.$swal('Modifier' , 'Le Rendez vous modifier avec Succès', 'warning');
                 $('#addNew').modal('hide');
                 var typeInter = setInterval( () => {
                     this.getEvents();
@@ -372,15 +410,55 @@ export default {
         crierConsultation(){
             this.myCons = true;
 
-        }
-        
+        },
 
+        ...mapActions(['getProfile']),
+
+        paginate(events){
+            let page = this.page;
+            let perPage = this.perPage;
+            let from = (page * perPage) - perPage;
+            let to = (page * perPage);
+            return events.slice(from, to)
+        },
+        setEvents(){
+            let numberOfPages = Math.ceil(this.events.length / this.perPage);
+            for(let i = 1; i <= numberOfPages; i++){
+                this.pages.push(i);
+            }
+        }
+
+    },
+    computed:{
+        filteredRendezVous(){
+
+            return this.paginate(this.events).filter((event) => event.patient.nom.toLowerCase().includes(this.search.toLowerCase()) || 
+                    String(event.date).toLowerCase().includes(this.search.toLowerCase()) 
+                )
+        },
+        matches(){
+                console.log(this.query);
+            if(this.query == ''){
+                return [];
+            }
+            return this.patients.filter((patient) => patient.nom.toLowerCase().includes(this.query.toLowerCase()))
+        },
+        ...mapGetters(['user']),
+    },
+    watch:{
+        events(){
+            this.setEvents();
+        }
     }
 
 }
 </script>
 
 <style>
+.page .RDV  
+.card .paginate{
+    margin-bottom: 10px;
+}
 
 .page .RDV  
 .card .card-title{
@@ -525,6 +603,10 @@ export default {
 
 #idPatient{
     display: none;
+}
+
+.page .RDV .divSearch{
+    margin-bottom: 10px;
 }
 
 

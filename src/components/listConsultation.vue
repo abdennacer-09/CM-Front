@@ -9,29 +9,65 @@
                 <div class="card-title">
                     <i class="fas fa-table"></i><span> Liste des consultation</span> 
                     <div class="card-tools">
-                        <a href="/consultation" class="btn btn-primary"><i class="fas fa-plus"></i>  Ajouter consultation</a>
+                        <!--<a href="/consultation" class="btn btn-primary"><i class="fas fa-plus"></i>  Ajouter consultation</a>-->
+                        <router-link class="btn btn-primary" to="/consultation" ><i class="fas fa-plus"></i>  Ajouter consultation</router-link>
+                        
                     </div>
                 </div>
                 
-                <div class="card-body">
+                <div class="card-body row">
+                    <div class="divSearch col-md-12">
+                        <input v-model="search" class="form-control" type="text" placeholder="Search" aria-label="Search">
+                    </div>
                     
                     <div class="table-responsive">
                         <table class="main-table text-center table table-bordered">
                             <tr>
                                 <th>Patient</th>
-                                <th>Date</th>                           
+                                <th>Date</th>
+                                <!--<th>ID</th>  -->
+                                <!--<th>Patient</th>  -->                    
                                 <th>Control</th>
                             </tr>
-                            <tr v-bind:key="consult._id" v-for="consult in consultations">
+                            <tr v-bind:key="consult._id" v-for="consult in /*consultations*/ filteredConsultation">
                                 <td>{{consult.patient.nom}}</td>
                                 <td>{{consult.date | myDate}}</td>
+                                <!--<td>{{consult._id}}</td>-->
+                                <!--<td>{{consult.patient}}</td>-->
                                 <td>
-                                    <a href="#"></a><i class="fas fa-edit"></i>&nbsp; 
-                                    <a @click="deleteConsultation(consult._id)" href="/listConsultation"><i class="fas fa-trash-alt"></i></a>&nbsp;
-                                    <a href="#"><i class="fas fa-eye"></i></a>
+                                    <!--<a href="#"></a><i class="fas fa-edit"></i>&nbsp; -->
+                                    <router-link class="fas fa-edit" :to="{ name :'consultation_edit' , params:{_id : consult._id} }" ></router-link>
+                                    <a style="cursor: pointer" @click="deleteConsultation(consult._id)" href="/listConsultation"><i class="fas fa-trash-alt"></i></a>&nbsp;
+                                    <!--<a href="#"><i class="fas fa-eye"></i></a>-->
+                                    <router-link class="fas fa-eye" :to="{ name :'consultation-watch' , params:{_id : consult._id} }" ></router-link>
                                 </td>
                             </tr>
                         </table>
+                    </div>
+                    <div class="btn-group col-md-2 offset-md-5">
+                        <button 
+                            v-if="page != 1"
+                            type="button" 
+                            @click="page--"
+                            class="btn btn-sm btn-outline-secondary"> 
+                                Précédent
+                        </button>
+                        <button 
+                            type="button"
+                            v-for="pageNumber in pages.slice(page-1, page+6)"
+                            :key="pageNumber"
+                            @click="page = pageNumber"
+                            class="btn btn-sm btn-outline-secondary">
+                                {{pageNumber}}
+                        </button>
+
+                        <button
+                            v-if="page < pages.length"
+                            type="button" 
+                            @click="page++"
+                            class="btn btn-sm btn-outline-secondary">
+                                Suivant
+                        </button>
                     </div>
                 </div>
             </div>
@@ -41,9 +77,14 @@
         
 </template>
 
-<script>
+<script> 
 
 import axios from 'axios';
+//import Api2 from '../services/Api2'
+import { mapState } from 'vuex';
+
+var url ='localhost:5000'
+//var url ='backend.storeino.info'
 
 export default {
     name: 'listConsultation',
@@ -52,55 +93,78 @@ export default {
     },
     data(){
         return{
-            consultations:[],
+            //consultations:[],
+            //consultations : [],//this.$store.state.consultations,
             patients:[],
             myConsultation:null,
-            idCons: ''
+            idCons: '',
+            search: '',
+            page:1,
+            perPage:10,
+            pages:[]
         };
     },
-    methods:{
-        
-    /* getLastConsultation(){
-            var lastPosition = this.consulations.length -1;
-                    this.idCons = this.consulations[lastPosition]._id;
-                    console.log(this.idCons);
+    
+    computed:{
+        ...mapState(['consultations']),
+        /*consultations(){
+            return this.$store.state.consultations
         },*/
-        getConsultations(){
-                axios.get('http://localhost:5000/consultations')
+        filteredConsultation: function(){
+            return this.paginate(this.consultations).filter((consult) => {
+                return consult.patient.nom.toLowerCase().includes(this.search.toLowerCase()) || 
+                String(consult.date).toLowerCase().includes(this.search.toLowerCase())
+            });
+        }
+    },
+    watch:{
+        consultations(){
+            this.setConsultations();
+        }
+    },
+    methods:{
+        paginate(consultations){
+            let page = this.page;
+            let perPage = this.perPage;
+            let from = (page * perPage) - perPage;
+            let to = (page * perPage);
+            return consultations.slice(from, to)
+        },
+        setConsultations(){
+            let numberOfPages = Math.ceil(this.consultations.length / this.perPage);
+            for(let i = 1; i <= numberOfPages; i++){
+                this.pages.push(i);
+            }
+        },
+        
+        /*getConsultations(){
+                axios.get('http://'+url+'/consultations')
                 .then(res => this.consultations = res.data)
                 .catch(err => console.log(err));
-                
-                /*var lastPosition = this.consultations.length -1;
 
-                    this.idCons = this.consultations[lastPosition];
-                    console.log(this.idCons);*/
-
-        },
+        },*/
         getPatients(){
-            
-
-                axios.get('http://localhost:5000/patients/5e7ea5dc77d5da3de8d5a9f5')
+                axios.get('http://'+url+'/patients/')
                 .then(res => this.patients = res.data)
-                .catch(err => console.log(err));
-
+                .catch(err => console.log(err)); 
         },
         deleteConsultation(_id){
             if(confirm('êtes-vous sûr de supprimer cet élément ?')){
-                axios.delete(`http://localhost:5000/consultations/5e7ea5dc77d5da3de8d5a9f5/deleteConsultation/${_id}`)
+                axios.delete(`http://`+url+`/consultations/deleteConsultation/${_id}`)
                 .then( () =>{
                     this.consultations = this.consultations.filter(consult => consult._id !== _id);
                 })
             }
         },
-        /*editPatient(consult){
-            this.myConsultation = consult;
-            this.nom = patient.nom;
-            this.prenom = patient.prenom;
-        },*/
+
+        /*deleteConsultation(consult){
+            thid.$store.dispatch('deleteConsultation', consult)
+        }*/
+        
     },
     created(){
-        this.getConsultations();
-        this.getPatients();
+        //this.getConsultations();
+        //this.getPatients();
         //setInterval( () => this.getPatients(), 2000);
     },
 
@@ -119,6 +183,10 @@ export default {
 
 .page .main-cons .titleListCons span{
     display: inline-block;
+}
+
+.page .main-cons .divSearch{
+    margin-bottom: 10px;
 }
 
 </style>

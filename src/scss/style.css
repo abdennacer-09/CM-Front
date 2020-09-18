@@ -254,7 +254,7 @@ body{
 }
 
 .usermenu-container .dropdown-menu{
-    min-width: 600px;
+    min-width: 300px;
     border: none;
     padding: 20px;
     top: 10px !important;
@@ -271,7 +271,15 @@ body{
 
 .usermenu-container 
 .dropdown-menu .activities-list li{
-    padding: 10px;
+    padding: 5px;
+    height: 50px;
+}
+
+.usermenu-container 
+.dropdown-menu .activities-list li a{
+    cursor: pointer;
+    text-decoration: none;
+    color: #333
 }
 
 .usermenu-container .dropdown-menu 
@@ -279,6 +287,18 @@ body{
     background-color: #F3F3F3;
     padding: 10px;
     border-radius: 6px;
+}
+.usermenu-container .dropdown-menu 
+.activities-list .link-box {
+    background-color: #F3F3F3;
+    padding: 10px;
+    border-radius: 6px;
+}
+
+
+.usermenu-container .dropdown-menu 
+.usermenu-links .link-box a:hover{
+    text-decoration: none;
 }
 .usermenu-container .dropdown-menu 
 .usermenu-links .link-box i.fa-cog{
@@ -292,6 +312,21 @@ body{
 
 .usermenu-container .dropdown-menu 
 .usermenu-links .link-box i.fa-power-off{
+    color: #c23616;
+}
+
+.usermenu-container .dropdown-menu 
+.activities-list .link-box i.fa-cog{
+    color: #00a8ff;
+}
+
+.usermenu-container .dropdown-menu 
+.activities-list .link-box i.fa-user{
+    color: #192a56;
+}
+
+.usermenu-container .dropdown-menu 
+.activities-list .link-box i.fa-power-off{
     color: #c23616;
 }
 
@@ -322,4 +357,127 @@ body{
 
 .page .content-area.nosidebar{
     width: 100%;
+}
+
+.page .content-area .usermenu-links .link-box{
+    cursor: pointer;
+}
+
+body .modelsCert{
+    font-weight: bold;
+}
+
+body .titleCert{
+    margin-bottom: 50px;
+    margin-top: 90px;
+}
+
+body .cert{
+    line-height: 32px;
+    border-style: ridge;
+    padding: 5px;
+    margin-bottom: 10px;
+}
+
+body .contCert {
+    padding: 20px 80px 20px 80px;
+}
+
+body .contCert h4{
+    font-weight: bold;
+    margin-bottom: 20px;;
+}
+
+body .firstPar{
+    margin-bottom: 50px;
+}
+body .secondPar{
+    margin-bottom: 50px;
+}
+body .TertthPar{
+    margin-bottom: 100px;
+}
+
+body .solid {
+    border-style: solid;
+    border-radius: 10px;
+    height: 150px;
+}
+body .topCert{
+    margin-bottom: 75px;
+    margin-top: 120px;
+}
+
+body .signature{
+    margin-bottom: 200px;
+}
+
+body.titleCertMdc1{
+    margin-bottom: 30px;
+}
+
+body .debutParPhys{
+    padding-left: 40px;
+}
+
+body .solid2{
+    border-style: solid;
+    height: 250px;
+    border-width: 1px;
+}
+
+body .contCert {
+    padding: 20px 80px 20px 80px;
+}
+
+body .secondAndTit{
+    margin-right: 40px;
+    margin-top: 6%;
+}
+
+body .SignCand{
+    margin-left: 60%;
+}
+
+body .resvMedcP span{
+    font-weight: bold;
+}
+
+body .apte{
+    font-weight: bold;
+}
+
+body .faitA{
+    margin-left: 50%;
+}
+
+body .SignCach{
+    margin-left: 60%;
+}
+
+body .D_R{
+    margin-left: 70%;
+}
+
+body .parMarg{
+    margin-left: 120px;
+    margin-right: 120px;
+}
+
+body .medicOrd{
+    font-weight: bold;
+}
+
+body .insidOrdns{
+    margin: 50px 200px;
+}
+
+
+body .nomPatOrd{
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+body.dateOrdns{
+    margin-bottom: 10px;
 }

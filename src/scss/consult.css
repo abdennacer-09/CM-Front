@@ -243,7 +243,7 @@
 .page .consPrs    
 .card-body .enregistrementAntec .card-body{
     padding: 5px;
-}
+} 
 
 .page .consPrs    
 .card-body .mt-2{
@@ -347,6 +347,12 @@
     margin-bottom: 0;
 }
 
+.page .consPrs .card-body .enregistrementRad .card-title {
+    background-color: #EEE;
+    padding: 5px;
+    margin-bottom: 0;
+}
+
 .page .consPrs    
 .card-body .enregistrementBilan .card-body{
     padding: 5px;
@@ -389,6 +395,24 @@
     width: 50%;
     margin-left: 20px;
 }
+
+.page .card-body .divInputsRein{
+    width: 80%;
+    padding-left: 10px;
+}
+
+.page .globalConsultation .card-body .divInputsRein input{
+    margin-bottom: 10px;
+}
+
+.page .globalConsultation .card-body .divInputsRein select{
+    margin-bottom: 10px;
+}
+
+.page .stlBio{
+    margin-bottom: 10px;
+}
+
 
 
 

@@ -1,11 +1,13 @@
 import Vue from 'vue';
 import App from './App.vue';
 import router from './router';
-import store from './store';
 import cont from './components/cont.vue';
 import axios from 'axios';
 import moment from 'moment';
 import VueProgressBar from 'vue-progressbar'
+import store from '@/store/store'
+
+import VueSweetalert2 from 'vue-sweetalert2';
 
 import "bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -19,18 +21,12 @@ import "./scss/style.css";
 import "./scss/fontawesome.min.css";
 import "./scss/all.min.css";
 import 'vue-datetime/dist/vue-datetime.css'
+import 'sweetalert2/dist/sweetalert2.min.css';
 
 Vue.component('app-cont', cont);
 
 Vue.config.productionTip = false;
 
-//load the token from the localStorage
-Vue.prototype.$http = axios;
-const token = localStorage.getItem("token");
-
-if(token){
-  Vue.prototype.$http.defaults.headers.common['Authorization'] = token;
-}
 
 /*Vue.filter('upText', function(text){
   return text.charAt(0).toUpperCase() + text.slice(1)
@@ -53,6 +49,16 @@ Vue.use(VueProgressBar, {
     failedColor: 'red',
     height: '3px'
 });
+
+Vue.use(VueSweetalert2);
+
+Vue.prototype.$http = axios;
+const token = localStorage.getItem("token");
+
+if(token){
+  Vue.prototype.$http.defaults.headers.common['Authorization'] = token;
+}
+
 
 new Vue({
   router,
